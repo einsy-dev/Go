@@ -10,7 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	users "app/internal/users"
+	"app/internal/movies"
+	"app/internal/users"
 )
 
 func main() {
@@ -29,7 +30,9 @@ func main() {
 	}
 
 	app := gin.Default()
+	app.Static("/static", "./public")
 
+	movies.Router(app, db.Collection("movies"))
 	users.Router(app, db.Collection("users"))
 
 	app.Run()
